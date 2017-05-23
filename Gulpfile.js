@@ -2,8 +2,8 @@ var gulp        = require('gulp');        // Libreria Gulp
 var sass        = require('gulp-sass');   // Sass automatizado con gulp
 var rename      = require('gulp-rename'); // Renombra los archivos rename('app.css')
 var babel       = require('babelify');    // Transforma el codigo escrito en ES6 a codigo legible por todos los navegadores.
-var browserify  = require('browserify');  
-var source      = require('vinyl-source-stream');
+var browserify  = require('browserify');  // Gestiona las dependencias de librerias de terceros.
+var source      = require('vinyl-source-stream'); // Une todos los modulos requeridos en un solo archivo js.
 
 
 // Se define la tarea de ejecutar el scss y compilarlo a css.
