@@ -1,0 +1,25 @@
+{
+  "name": "platzigram",
+  "version": "0.1.0",
+  "description": "Es una plataforma construida con fines educativos para el aprendizaje del lenguje de programacion JavaScript",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orionkmc/platzigram.git"
+  },
+  "keywords": [
+    "platzi",
+    "javascript",
+    "curso-definitivo",
+    "platzigram"
+  ],
+  "author": "kuai-mare",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/orionkmc/platzigram/issues"
+  },
+  "homepage": "https://github.com/orionkmc/platzigram#readme",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
