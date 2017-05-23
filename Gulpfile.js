@@ -1,21 +1,36 @@
-var gulp = require('gulp');           // Libreria Gulp
-var sass = require('gulp-sass');      // Sass automatizado con gulp
-var rename = require('gulp-rename');  // Renombra los archivos rename('app.css')
+var gulp        = require('gulp');        // Libreria Gulp
+var sass        = require('gulp-sass');   // Sass automatizado con gulp
+var rename      = require('gulp-rename'); // Renombra los archivos rename('app.css')
+var babel       = require('babelify');    // Transforma el codigo escrito en ES6 a codigo legible por todos los navegadores.
+var browserify  = require('browserify');  
+var source      = require('vinyl-source-stream');
+
 
 // Se define la tarea de ejecutar el scss y compilarlo a css.
 gulp.task('style', function(){
   gulp
-    .src('index.scss')          // Ruta del archivo al que se le va a aplicar la tarea.
+    .src('index.scss')          // Ruta origen de los archivo a transpilar a css.
     .pipe(sass())               // Lo q se va a hacer.
     .pipe(rename('app.css'))    // El nombre q va a tener el nuevo archivo.
-    .pipe(gulp.dest('public')); // Donde se va a dejar.
+    .pipe(gulp.dest('public')); // Ruta destino del archivo.
 });
 
+// Genera todos los archivos q se encuentran en assets al directorio public.
 gulp.task('assets', function(){
   gulp
-    .src('assets/*')
-    .pipe(gulp.dest('public'));
+    .src('assets/*')            // Ruta origen de los archivos.
+    .pipe(gulp.dest('public')); // Ruta destino de los archivos.
 });
 
-// Se le da un nombre a la/s tareas.
-gulp.task('default', ['style', 'assets']);
+// Transpila codigo JavaScript
+gulp.task('scripts', function(){
+  browserify('./src/index.js')
+    .transform(babel)           // Transforma el codigo escrito en ES6 a codigo legible por todos los navegadores.
+    .bundle()                   // Procesa y genera el archivo.
+    .pipe(source('index.js'))   // Archivo q va a transformar.
+    .pipe(rename('app.js'))     // El nuevo nombre del archivo.
+    .pipe(gulp.dest('public'))  // Destino del nuevo archivo.
+  });
+
+// Lista de tareas ejecutar
+gulp.task('default', ['style', 'assets', 'scripts']);
