@@ -4,7 +4,7 @@ var rename      = require('gulp-rename'); // Renombra los archivos rename('app.c
 var babel       = require('babelify');    // Transforma el codigo escrito en ES6 a codigo legible por todos los navegadores.
 var browserify  = require('browserify');  // Gestiona las dependencias de librerias de terceros.
 var source      = require('vinyl-source-stream'); // Une todos los modulos requeridos en un solo archivo js.
-
+var watchify     = require('watchify');             // 
 
 // Se define la tarea de ejecutar el scss y compilarlo a css.
 gulp.task('style', function(){
@@ -34,3 +34,30 @@ gulp.task('scripts', function(){
 
 // Lista de tareas ejecutar
 gulp.task('default', ['style', 'assets', 'scripts']);
+
+//gulp.task('default', ['style', 'assets', 'build']);
+
+/*
+function compile(watch){
+  let bundle = watchify(browserify('./src/index.js'));
+
+  function rebundle(){
+  bundle
+    .transform(babel)           // Transforma el codigo escrito en ES6 a codigo legible por todos los navegadores.
+    .bundle()                   // Procesa y genera el archivo.
+    .pipe(source('index.js'))   // Archivo q va a transformar.
+    .pipe(rename('app.js'))     // El nuevo nombre del archivo.
+    .pipe(gulp.dest('public'))  // Destino del nuevo archivo.
+  }
+
+  if (watch) {
+    bundle.on('update', function(){
+      console.log('----> Bundling...');
+      rebundle();
+    });
+  }
+  rebundle();
+}
+*/
+//gulp.task('build', function(){ return compile(); });
+//gulp.task('watch', function(){ return compile(true); });
