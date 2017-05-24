@@ -1,6 +1,8 @@
 var yo = require('yo-yo');
+module.exports = function(pic) {
+  var el;
 
-module.exports = function (picture) {
+  function render(picture) {
     return yo`<div class="card ${picture.liked ? 'liked' : ''}">
       <div class="card-image">
         <img class="activator" src="${picture.url}">
@@ -12,10 +14,21 @@ module.exports = function (picture) {
         </a>
         <small class="right time">${picture.createdAt}</small>
         <p>
-          <a class="left" href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
-          <a class="left" href="#"><i class="fa fa-heart" aria-hidden="true"></i></a>
+          <a class="left" href="#" onclick=${like.bind(null, true)}><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+          <a class="left" href="#" onclick=${like.bind(null, false)}><i class="fa fa-heart" aria-hidden="true"></i></a>
           <span class="left likes">${picture.likes} Me gusta</span>
         </p>
       </div>
     </div>`;
   }
+
+function like(liked) {
+    pic.liked = liked;
+    pic.likes += liked ? 1 : -1;
+    var newEl = render(pic);
+    yo.update(el,  );
+    return false;
+  }
+  el = render(pic);
+  return el;
+}
