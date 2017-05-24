@@ -13,15 +13,15 @@ app.use(express.static('public'));
 
 // Se definen las url
 app.get('/', function(req, res){
-  res.render('index');
+  res.render('index', { title: 'Platzigram - Home' });
 });
 
 app.get('/signup', function(req, res){
-  res.render('index');
+  res.render('index', { title: 'Platzigram - Signin' });
 });
 
 app.get('/signin', function(req, res){
-  res.render('index');
+  res.render('index', { title: 'Platzigram - Signup' });
 });
 
 // Se lanza el servidor en el puerto especificado
