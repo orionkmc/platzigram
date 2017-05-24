@@ -27,6 +27,7 @@ gulp.task('scripts', function(){
   browserify('./src/index.js')
     .transform(babel)           // Transforma el codigo escrito en ES6 a codigo legible por todos los navegadores.
     .bundle()                   // Procesa y genera el archivo.
+    .on('error', function(err){ console.log(err); this.emit('end') }) // procesa posibles errores.
     .pipe(source('index.js'))   // Archivo q va a transformar.
     .pipe(rename('app.js'))     // El nuevo nombre del archivo.
     .pipe(gulp.dest('public'))  // Destino del nuevo archivo.
@@ -45,6 +46,7 @@ function compile(watch){
   bundle
     .transform(babel)           // Transforma el codigo escrito en ES6 a codigo legible por todos los navegadores.
     .bundle()                   // Procesa y genera el archivo.
+    .on('error', function(err){ console.log(err); this.emit('end') })
     .pipe(source('index.js'))   // Archivo q va a transformar.
     .pipe(rename('app.js'))     // El nuevo nombre del archivo.
     .pipe(gulp.dest('public'))  // Destino del nuevo archivo.
