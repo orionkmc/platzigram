@@ -1,6 +1,19 @@
 var express = require('express');
+var multer = require('multer');
+var ext = require('file-extension');
 
-var app = express();
+var storage = multer.diskStorage({
+    destination: function(req, file, cb){
+        cb(null, './uploads')
+    },
+    filename: function(req, file, cb){
+        cb(null, +Date.now() +'.'+ ext(file.originalname))
+    }
+})
+
+var upload = multer({ storage: storage }).single('picture');
+
+var app   = express();
 
 // Directorio donde se encuentran los archivos de plantilla.
 app.set('views', './views');
@@ -51,7 +64,17 @@ app.get('/api/pictures', function(req, res, next){
     setTimeout(function(){
       res.send(pictures);
     }, 2000);
-  })
+  });
+
+app.post('/api/pictures', function(req, res){
+    upload(req, res, function(err){
+        if (err) {
+            return res.send(500, "Error uploading file");
+        }
+        res.send('Fileuploaded');
+    });
+});
+
 // Se lanza el servidor en el puerto especificado
 app.listen(3000, function (err){
   if (err) return console.log('Hubo un error'), process.exit(1);
