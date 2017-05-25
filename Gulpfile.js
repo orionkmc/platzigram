@@ -25,7 +25,7 @@ gulp.task('assets', function(){
 // Transpila codigo JavaScript
 gulp.task('scripts', function(){
   browserify('./src/index.js')
-    .transform(babel)           // Transforma el codigo escrito en ES6 a codigo legible por todos los navegadores.
+    .transform(babel,{presets:[ 'es2015' ], plugins: [ 'syntax-async-functions' ]}) // Transforma el codigo escrito en ES6 a codigo legible por todos los navegadores.
     .bundle()                   // Procesa y genera el archivo.
     .on('error', function(err){ console.log(err); this.emit('end') }) // procesa posibles errores.
     .pipe(source('index.js'))   // Archivo q va a transformar.
@@ -40,7 +40,16 @@ gulp.task('default', ['style', 'assets', 'scripts']);
 
 /*
 function compile(watch){
-  let bundle = watchify(browserify('./src/index.js'));
+  var bundle = browserify('./src/index.js');
+
+  if (watch) {
+    
+    bundle = watchify(bundle);
+    bundle.on('update', function(){
+      console.log('----> Bundling...');
+      rebundle();
+    });
+  }
 
   function rebundle(){
   bundle
@@ -52,12 +61,6 @@ function compile(watch){
     .pipe(gulp.dest('public'))  // Destino del nuevo archivo.
   }
 
-  if (watch) {
-    bundle.on('update', function(){
-      console.log('----> Bundling...');
-      rebundle();
-    });
-  }
   rebundle();
 }
 */

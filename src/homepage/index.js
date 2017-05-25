@@ -8,13 +8,23 @@ var header    = require('../header');
 //var request   = require('superagent');
 //var axios     = require('axios');
 
-
 page('/', header, loadPictures, function(ctx, next){
   title('Platzigram - Home');
   var main  = document.getElementById('main-container');
   empty(main).appendChild(template(ctx.pictures));
 });
 
+// Usando async await.
+async function loadPictures(ctx, next){
+    try{
+      ctx.pictures = await fetch('/api/pictures').then(res => res.json());
+      next();
+    } catch (err){
+        return console.log(err);
+    }
+}
+
+/*
 // Utilizando fetch (libreria nativa en los navegadores para hacer request http)
 function loadPictures(ctx, next) {
   fetch('/api/pictures')
@@ -29,9 +39,10 @@ function loadPictures(ctx, next) {
       console.log(err);
     })
 }
+*/
 
-// Utilizando libreria axios
 /*
+// Utilizando libreria axios
 function loadPictures(ctx, next) {
   axios
     .get('/api/pictures')
@@ -45,8 +56,8 @@ function loadPictures(ctx, next) {
 }
 */
 
-// Utilizando libreria superagent
 /*
+// Utilizando libreria superagent
 function loadPictures(ctx, next) {
   request
     .get('/api/pictures')
