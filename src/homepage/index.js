@@ -6,7 +6,7 @@ var header    = require('../header');
 
 // Librerias para ejecutar request http
 //var request   = require('superagent');
-var axios     = require('axios');
+//var axios     = require('axios');
 
 
 page('/', header, loadPictures, function(ctx, next){
@@ -15,9 +15,23 @@ page('/', header, loadPictures, function(ctx, next){
   empty(main).appendChild(template(ctx.pictures));
 });
 
+// Utilizando fetch (libreria nativa en los navegadores para hacer request http)
+function loadPictures(ctx, next) {
+  fetch('/api/pictures')
+    .then(function(res){
+      return res.json();
+    })
+    .then(function(pictures){
+      ctx.pictures = pictures;
+      next();
+    }) 
+    .catch(function(err){
+      console.log(err);
+    })
+}
 
 // Utilizando libreria axios
-
+/*
 function loadPictures(ctx, next) {
   axios
     .get('/api/pictures')
@@ -29,7 +43,7 @@ function loadPictures(ctx, next) {
       console.log(err);
     });
 }
-
+*/
 
 // Utilizando libreria superagent
 /*
