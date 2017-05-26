@@ -17,8 +17,8 @@ module.exports = function pictureCard(pic) {
         </a>
         <small class="right time">${translate.date.format(picture.createdAt)}</small>
         <p>
-          <a class="left" href="#" onclick=${like.bind(null, true)}><i class="fa fa-heart-o" aria-hidden="true"></i></a>
-          <a class="left" href="#" onclick=${like.bind(null, false)}><i class="fa fa-heart" aria-hidden="true"></i></a>
+          <a class="left" href="#" onclick=${like.bind(null, true, false)}><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+          <a class="left" href="#" onclick=${like.bind(null, false, false)}><i class="fa fa-heart" aria-hidden="true"></i></a>
           <span class="left likes">${translate.message('likes', { likes: picture.likes })}</span>
         </p>
       </div>
@@ -44,6 +44,7 @@ module.exports = function pictureCard(pic) {
       pic.likedHeart = false;
       doRender();
     },1500);
+
     return false;
   }
 
