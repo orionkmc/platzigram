@@ -8,11 +8,18 @@ var header    = require('../header');
 //var request   = require('superagent');
 //var axios     = require('axios');
 
-page('/', header, loadPictures, function(ctx, next){
+page('/', header, leading, loadPictures, function(ctx, next){
   title('Platzigram - Home');
   var main  = document.getElementById('main-container');
   empty(main).appendChild(template(ctx.pictures));
 });
+
+function leading(ctx, next){
+  var el = document.createElement('div');
+  el.classList.add('loader');
+  document.getElementById('main-container').appendChild(el);
+  next();
+}
 
 // Usando async await.
 async function loadPictures(ctx, next){
